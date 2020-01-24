@@ -10,7 +10,7 @@ public class JavaProject1 {
 
 		// initialize the threads
 		Thread p1 = new Thread(new Producer(buffer, BUFFER_SIZE, count, addIndex));
-		Thread c1 = new Thread(new Producer(buffer, BUFFER_SIZE, count, remIndex));
+		Thread c1 = new Thread(new Consumer(buffer, BUFFER_SIZE, count, remIndex));
 
 		// start the threads
 		p1.start();

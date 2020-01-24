@@ -11,30 +11,31 @@ class Consumer implements Runnable {
 	}
 
 	synchronized public void run() {
-		int value;
-		// when buffer full, cannot produce
-		while (count == 0) {
+		while (true) {
+			int value;
+			// when buffer full, cannot produce
+			while (count == 0) {
+				try {
+					wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+
+			// add int to array
+			--count;
+			value = buffer[remIndex];
+			System.out.println("Value removed: " + value);
+			remIndex = (remIndex + 1) % BUFFER_SIZE;
+
+			// wake up consumer
+			notify();
+
 			try {
-				wait();
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-
-		// add int to array
-		--count;
-		value = buffer[remIndex];
-		System.out.println("Value removed: " + value);
-		remIndex = (remIndex + 1) % BUFFER_SIZE;
-
-		// wake up consumer
-		notify();
-
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
 	}
 }
