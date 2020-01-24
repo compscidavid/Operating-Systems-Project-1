@@ -6,6 +6,7 @@ class Producer implements Runnable {
 
 	public Producer(int[] buffer, final int BUFFER_SIZE, int count, int addIndex) {
 		this.buffer = buffer;
+		this.count = count;
 		this.addIndex = addIndex;
 	}
 
